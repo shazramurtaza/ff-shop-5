@@ -1,0 +1,23 @@
+:root {
+  --ff-navy: #14213d;
+  --ff-blue: #1f5eff;
+  --ff-ink: #1d2733;
+  --ff-muted: #667085;
+  --ff-surface: #f5f7fa;
+  --ff-border: #d9e1ea;
+  --ff-white: #ffffff;
+  --ff-page-width: 1200px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; color: var(--ff-ink); background: #f7f9fc; font-family: Arial, Helvetica, sans-serif; line-height: 1.5; }
+a { color: inherit; }
+.ff-page-width { width: min(calc(100% - 40px), var(--ff-page-width)); margin-inline: auto; }
+.ff-site-header { background: var(--ff-navy); color: var(--ff-white); }
+.ff-site-header__inner { min-height: 68px; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.ff-site-header__inner span { font-size: 0.875rem; opacity: 0.78; }
+.ff-site-footer { padding: 32px 0; color: var(--ff-muted); font-size: 0.875rem; }
+@media (max-width: 749px) {
+  .ff-page-width { width: min(calc(100% - 32px), var(--ff-page-width)); }
+  .ff-site-header__inner { align-items: flex-start; flex-direction: column; justify-content: center; gap: 2px; }
+}

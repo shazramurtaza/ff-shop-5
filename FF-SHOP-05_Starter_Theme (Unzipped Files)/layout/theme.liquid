@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{ page_title | escape }}</title>
+    {{ content_for_header }}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+  </head>
+  <body>
+    <header class="ff-site-header">
+      <div class="ff-page-width ff-site-header__inner">
+        <strong>French Fitness</strong>
+        <span>Hiring exercise theme — not for production</span>
+      </div>
+    </header>
+    <main id="MainContent" role="main">
+      {{ content_for_layout }}
+    </main>
+    <footer class="ff-site-footer">
+      <div class="ff-page-width">FF Shopify paid test • hiring exercise only</div>
+    </footer>
+  </body>
+</html>

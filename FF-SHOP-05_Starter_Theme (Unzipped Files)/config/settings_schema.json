@@ -1,0 +1,14 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "FF Shopify Paid Test Starter",
+    "theme_version": "1.0.0",
+    "theme_author": "Fitness Superstore / French Fitness",
+    "theme_documentation_url": "https://www.frenchfitness.com",
+    "theme_support_url": "https://www.frenchfitness.com"
+  },
+  {
+    "name": "Theme settings",
+    "settings": []
+  }
+]

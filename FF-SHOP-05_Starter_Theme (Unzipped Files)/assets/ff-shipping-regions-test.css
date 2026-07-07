@@ -1,0 +1,18 @@
+/*
+  CANDIDATE TASK
+  Complete the component styles using the supplied desktop/mobile references.
+  Keep all selectors scoped under .ff-shipping-regions-test.
+*/
+.ff-shipping-regions-test {
+  padding-block: 64px;
+}
+
+.ff-shipping-regions-test__eyebrow {
+  color: #b42318;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* TODO: comparison matrix, mobile region cards, FAQ, CTA, states, and focus styling. */

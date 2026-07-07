@@ -1,0 +1,94 @@
+{
+  "sections": {
+    "main": {
+      "type": "ff-shipping-regions-test",
+      "settings": {
+        "heading": "Shipping & Service Regions",
+        "intro": "<p>Use this comparison to review the service paths represented in this hiring exercise. Availability, pricing, and final delivery terms are intentionally excluded because this is test content, not production policy.</p>",
+        "service_1": "Parcel delivery",
+        "service_2": "Freight delivery",
+        "service_3": "Room-of-choice service",
+        "service_4": "Assembly coordination",
+        "cta_heading": "Questions about your destination?",
+        "cta_body": "Use the test CTA below. It is included to evaluate component structure and responsive behavior.",
+        "cta_label": "Contact Our Team",
+        "cta_link": "#test-contact"
+      },
+      "blocks": {
+        "region_1": {
+          "type": "region",
+          "settings": {
+            "title": "Continental USA",
+            "status_1": "Eligible items",
+            "status_2": "Available by quote",
+            "status_3": "Select orders",
+            "status_4": "Select orders"
+          }
+        },
+        "region_2": {
+          "type": "region",
+          "settings": {
+            "title": "Alaska & Hawaii",
+            "status_1": "Eligible items",
+            "status_2": "Quote required",
+            "status_3": "Contact our team",
+            "status_4": "Contact our team"
+          }
+        },
+        "region_3": {
+          "type": "region",
+          "settings": {
+            "title": "Canada",
+            "status_1": "Eligible items",
+            "status_2": "Quote required",
+            "status_3": "Select markets",
+            "status_4": "Select markets"
+          }
+        },
+        "region_4": {
+          "type": "region",
+          "settings": {
+            "title": "International",
+            "status_1": "Contact our team",
+            "status_2": "Quote required",
+            "status_3": "Select markets",
+            "status_4": "Select markets"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "How should conflicting requirements be handled?",
+            "answer": "<p>Do not guess. Record the conflict in the assumption log and request clarification before changing approved copy or unrelated theme code.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "What content should be editable?",
+            "answer": "<p>The heading, introduction, CTA, region labels, service labels, service statuses, and FAQ items should be editable through the Shopify theme editor where practical.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Is this production policy?",
+            "answer": "<p>No. This content is a hiring exercise fixture only and must never be published as customer-facing policy.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "region_1",
+        "region_2",
+        "region_3",
+        "region_4",
+        "faq_1",
+        "faq_2",
+        "faq_3"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
