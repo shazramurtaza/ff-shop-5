@@ -1,3 +1,0 @@
-extends: theme-check:recommended
-ignore:
-  - node_modules/**
