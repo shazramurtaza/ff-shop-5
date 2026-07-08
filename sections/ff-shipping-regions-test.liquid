@@ -1,30 +1,219 @@
 {{ 'ff-shipping-regions-test.css' | asset_url | stylesheet_tag }}
 
-{%- comment -%}
-  FF SHOPIFY PAID TEST
-  Implement the supplied design using the existing section settings and blocks.
-  Candidate-facing requirements are in the provided brief and design specification.
-{%- endcomment -%}
+{%- liquid
+  assign regions = section.blocks | where: 'type', 'region'
+  assign faqs = section.blocks | where: 'type', 'faq'
+
+  assign cta_href = section.settings.cta_link
+  if cta_href == blank
+    assign cta_href = '#shipping-service-regions'
+  endif
+-%}
+
+{% style %}
+  @font-face {
+    font-family: 'Prima Sans';
+    src: url('{{ 'prima-sans-regular.woff' | asset_url }}') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Prima Sans';
+    src:
+      url('{{ 'prima-sans-bold.woff2' | asset_url }}') format('woff2'),
+      url('{{ 'prima-sans-bold.woff' | asset_url }}') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  #shipping-service-regions {
+    --ff-shipping-regions-test-font: 'Prima Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --ff-shipping-regions-test-heading-font: 'Prima Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --ff-shipping-regions-test-heading-weight: 700;
+    --ff-shipping-regions-test-heading-style: normal;
+  }
+{% endstyle %}
 
 <section
   id="shipping-service-regions"
   class="ff-shipping-regions-test"
   aria-labelledby="ff-shipping-regions-heading-{{ section.id }}"
 >
-  <div class="ff-page-width">
-    <p class="ff-shipping-regions-test__eyebrow">Hiring exercise only — do not publish</p>
+  <p class="ff-shipping-regions-test__eyebrow">
+    <span class="ff-shipping-regions-test__eyebrow-full">Hiring exercise only — do not publish</span>
+    <span class="ff-shipping-regions-test__eyebrow-short">Hiring exercise only</span>
+  </p>
 
-    <h2 id="ff-shipping-regions-heading-{{ section.id }}">
+  <div class="ff-page-width">
+    <h2 id="ff-shipping-regions-heading-{{ section.id }}" class="ff-shipping-regions-test__heading">
       {{ section.settings.heading | escape }}
     </h2>
 
-    <div class="ff-shipping-regions-test__intro rte">
-      {{ section.settings.intro }}
-    </div>
+    {%- if section.settings.intro != blank -%}
+      <div class="ff-shipping-regions-test__intro rte">
+        {{ section.settings.intro }}
+      </div>
+    {%- endif -%}
 
-    <div class="ff-shipping-regions-test__todo">
-      <p><strong>Candidate task:</strong> Replace this placeholder with the responsive comparison, mobile region cards, FAQ disclosures, and CTA shown in the supplied references.</p>
-    </div>
+    {%- if regions.size > 0 -%}
+      <div class="ff-shipping-regions-test__comparison">
+        {%- comment -%} Desktop matrix: one row per service, one column per region block. {%- endcomment -%}
+        <div class="ff-shipping-regions-test__table-scroll">
+        <table class="ff-shipping-regions-test__table">
+          <caption class="ff-shipping-regions-test__visually-hidden">
+            Shipping and service availability by region
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col" class="ff-shipping-regions-test__corner">Service</th>
+              {%- for region in regions -%}
+                <th scope="col" {{ region.shopify_attributes }}>{{ region.settings.title | escape }}</th>
+              {%- endfor -%}
+            </tr>
+          </thead>
+          <tbody>
+            {%- for i in (1..4) -%}
+              {%- liquid
+                case i
+                  when 1
+                    assign service_label = section.settings.service_1
+                  when 2
+                    assign service_label = section.settings.service_2
+                  when 3
+                    assign service_label = section.settings.service_3
+                  when 4
+                    assign service_label = section.settings.service_4
+                endcase
+              -%}
+              {%- if service_label != blank -%}
+                <tr>
+                  <th scope="row">{{ service_label | escape }}</th>
+                  {%- for region in regions -%}
+                    {%- liquid
+                      case i
+                        when 1
+                          assign status = region.settings.status_1
+                        when 2
+                          assign status = region.settings.status_2
+                        when 3
+                          assign status = region.settings.status_3
+                        when 4
+                          assign status = region.settings.status_4
+                      endcase
+
+                      assign is_attention = false
+                      if status contains 'Contact' or status contains 'Quote required'
+                        assign is_attention = true
+                      endif
+                    -%}
+                    <td>
+                      {%- if status != blank -%}
+                        <span class="ff-shipping-regions-test__badge {% if is_attention %}ff-shipping-regions-test__badge--attention{% else %}ff-shipping-regions-test__badge--positive{% endif %}">
+                          {{ status | escape }}
+                        </span>
+                      {%- endif -%}
+                    </td>
+                  {%- endfor -%}
+                </tr>
+              {%- endif -%}
+            {%- endfor -%}
+          </tbody>
+        </table>
+        </div>
+
+        {%- comment -%} Mobile cards: same region-block data, one card per region. {%- endcomment -%}
+        <ul class="ff-shipping-regions-test__cards">
+          {%- for region in regions -%}
+            <li class="ff-shipping-regions-test__card" {{ region.shopify_attributes }}>
+              <h3 class="ff-shipping-regions-test__card-title">{{ region.settings.title | escape }}</h3>
+              <dl class="ff-shipping-regions-test__card-list">
+                {%- for i in (1..4) -%}
+                  {%- liquid
+                    case i
+                      when 1
+                        assign service_label = section.settings.service_1
+                        assign status = region.settings.status_1
+                      when 2
+                        assign service_label = section.settings.service_2
+                        assign status = region.settings.status_2
+                      when 3
+                        assign service_label = section.settings.service_3
+                        assign status = region.settings.status_3
+                      when 4
+                        assign service_label = section.settings.service_4
+                        assign status = region.settings.status_4
+                    endcase
+
+                    assign is_attention = false
+                    if status contains 'Contact' or status contains 'Quote required'
+                      assign is_attention = true
+                    endif
+                  -%}
+                  {%- if service_label != blank -%}
+                    <div class="ff-shipping-regions-test__card-row">
+                      <dt>{{ service_label | escape }}</dt>
+                      <dd>
+                        {%- if status != blank -%}
+                          <span class="ff-shipping-regions-test__badge {% if is_attention %}ff-shipping-regions-test__badge--attention{% else %}ff-shipping-regions-test__badge--positive{% endif %}">
+                            {{ status | escape }}
+                          </span>
+                        {%- endif -%}
+                      </dd>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </dl>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if faqs.size > 0 -%}
+      <div class="ff-shipping-regions-test__faq">
+        {%- if section.settings.faq_heading != blank -%}
+          <h2 class="ff-shipping-regions-test__faq-heading">{{ section.settings.faq_heading | escape }}</h2>
+        {%- endif -%}
+        <div class="ff-shipping-regions-test__faq-list">
+          {%- for block in faqs -%}
+            <details class="ff-shipping-regions-test__faq-item" {% if forloop.first %}open{% endif %} {{ block.shopify_attributes }}>
+              <summary class="ff-shipping-regions-test__faq-question">
+                <span>{{ block.settings.question | escape }}</span>
+                <span class="ff-shipping-regions-test__faq-icon" aria-hidden="true"></span>
+              </summary>
+              <div class="ff-shipping-regions-test__faq-answer">
+                <div class="ff-shipping-regions-test__faq-answer-inner rte">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+            </details>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.cta_heading != blank or section.settings.cta_body != blank -%}
+      <div class="ff-shipping-regions-test__cta">
+        <div class="ff-shipping-regions-test__cta-copy">
+          {%- if section.settings.cta_heading != blank -%}
+            <h2 class="ff-shipping-regions-test__cta-heading">{{ section.settings.cta_heading | escape }}</h2>
+          {%- endif -%}
+          {%- if section.settings.cta_body != blank -%}
+            <p class="ff-shipping-regions-test__cta-body">{{ section.settings.cta_body | escape }}</p>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.cta_label != blank -%}
+          <a class="ff-shipping-regions-test__cta-button" href="{{ cta_href }}">
+            {{ section.settings.cta_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <p class="ff-shipping-regions-test__design-note">Design intent: desktop comparison matrix; mobile region cards; native FAQ disclosure; scoped component styling.</p>
   </div>
 </section>
 
@@ -44,7 +233,7 @@
       "type": "richtext",
       "id": "intro",
       "label": "Introduction",
-      "default": "<p>Use this comparison to review the service paths represented in this hiring exercise.</p>"
+      "default": "<p>Use this comparison to review the service paths represented in this hiring exercise. Availability, pricing, and final delivery terms are intentionally excluded because this is test content, not production policy.</p>"
     },
     {
       "type": "header",
@@ -54,6 +243,11 @@
     { "type": "text", "id": "service_2", "label": "Service 2", "default": "Freight delivery" },
     { "type": "text", "id": "service_3", "label": "Service 3", "default": "Room-of-choice service" },
     { "type": "text", "id": "service_4", "label": "Service 4", "default": "Assembly coordination" },
+    {
+      "type": "header",
+      "content": "FAQ"
+    },
+    { "type": "text", "id": "faq_heading", "label": "FAQ heading", "default": "Frequently Asked Questions" },
     {
       "type": "header",
       "content": "CTA"
