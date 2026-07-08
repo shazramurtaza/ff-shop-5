@@ -64,11 +64,11 @@
         <div class="ff-shipping-regions-test__table-scroll">
         <table class="ff-shipping-regions-test__table">
           <caption class="ff-shipping-regions-test__visually-hidden">
-            Shipping and service availability by region
+            {{ section.settings.table_caption | escape }}
           </caption>
           <thead>
             <tr>
-              <th scope="col" class="ff-shipping-regions-test__corner">Service</th>
+              <th scope="col" class="ff-shipping-regions-test__corner">{{ section.settings.service_column_label | escape }}</th>
               {%- for region in regions -%}
                 <th scope="col" {{ region.shopify_attributes }}>{{ region.settings.title | escape }}</th>
               {%- endfor -%}
@@ -213,7 +213,9 @@
       </div>
     {%- endif -%}
 
-    <p class="ff-shipping-regions-test__design-note">Design intent: desktop comparison matrix; mobile region cards; native FAQ disclosure; scoped component styling.</p>
+    {%- if section.settings.design_note != blank -%}
+      <p class="ff-shipping-regions-test__design-note">{{ section.settings.design_note | escape }}</p>
+    {%- endif -%}
   </div>
 </section>
 
@@ -239,10 +241,12 @@
       "type": "header",
       "content": "Service labels"
     },
+    { "type": "text", "id": "service_column_label", "label": "Service column label", "info": "Heading for the left-hand label column in the desktop table.", "default": "Service" },
     { "type": "text", "id": "service_1", "label": "Service 1", "default": "Parcel delivery" },
     { "type": "text", "id": "service_2", "label": "Service 2", "default": "Freight delivery" },
     { "type": "text", "id": "service_3", "label": "Service 3", "default": "Room-of-choice service" },
     { "type": "text", "id": "service_4", "label": "Service 4", "default": "Assembly coordination" },
+    { "type": "text", "id": "table_caption", "label": "Table description (screen readers only)", "info": "Not visible on screen; read by screen readers to describe the comparison table.", "default": "Shipping and service availability by region" },
     {
       "type": "header",
       "content": "FAQ"
@@ -255,7 +259,12 @@
     { "type": "text", "id": "cta_heading", "label": "CTA heading", "default": "Questions about your destination?" },
     { "type": "textarea", "id": "cta_body", "label": "CTA body", "default": "Use the test CTA below. It is included to evaluate component structure and responsive behavior." },
     { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Contact Our Team" },
-    { "type": "url", "id": "cta_link", "label": "CTA link" }
+    { "type": "url", "id": "cta_link", "label": "CTA link" },
+    {
+      "type": "header",
+      "content": "Footer note"
+    },
+    { "type": "text", "id": "design_note", "label": "Design note", "info": "Small print shown below the CTA.", "default": "Design intent: desktop comparison matrix; mobile region cards; native FAQ disclosure; scoped component styling." }
   ],
   "blocks": [
     {
